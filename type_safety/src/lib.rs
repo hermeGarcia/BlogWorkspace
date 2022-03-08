@@ -14,6 +14,9 @@ impl<E, S> SafeVec<E, S> {
     pub fn len(&self) -> usize {
         self.raw_vec.len()
     }
+    pub fn pop(&mut self) -> Option<E> {
+        self.raw_vec.pop()
+    }
 }
 
 impl<E> SafeVec<E, UnSorted>
@@ -22,9 +25,6 @@ where
 {
     pub fn push(&mut self, elem: E) {
         self.raw_vec.push(elem);
-    }
-    pub fn pop(&mut self) -> Option<E> {
-        self.raw_vec.pop()
     }
     pub fn sort(mut self) -> SafeVec<E, Sorted> {
         self.raw_vec.sort();
