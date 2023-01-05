@@ -1,0 +1,24 @@
+use crate::ir::*;
+grammar;
+
+
+pub Context: Vec<BooleanExpr> = {
+    <expr: BooleanExpr> => vec![expr],
+    <mut c: Context> ":" <expr: BooleanExpr> => {
+        c.push(expr);
+        c
+    }
+};
+
+pub BooleanExpr: BooleanExpr = {
+    "$" <id: IDENTIFIER> => BooleanExpr::Variable(id),
+    "True" => BooleanExpr::True,
+    "False" => BooleanExpr::False,
+    "(" "Not" <arg: BooleanExpr>")" => BooleanExpr::Not(Box::new(arg)),
+    "(" "And" <lhe: BooleanExpr> <rhe: BooleanExpr> ")" => BooleanExpr::And(Box::new(lhe), Box::new(rhe)),
+    "(" "Or" <lhe: BooleanExpr> <rhe: BooleanExpr> ")" => BooleanExpr::Or(Box::new(lhe), Box::new(rhe)),
+};
+
+IDENTIFIER: usize = {
+    r"[0-9]+" => <>.parse().expect("failed to parse number")
+};
