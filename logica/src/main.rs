@@ -73,7 +73,7 @@ fn main() {
     compiler.ouput.write_all(core::circuit_start().as_bytes()).unwrap();
     compiler.ouput.write_all(b"\n").unwrap();
     compiler.compile(circuit);
-    compiler.ouput.flush().unwrap();
     compiler.ouput.write_all(b"\n").unwrap();
     compiler.ouput.write_all(core::circuit_end().as_bytes()).unwrap();
+    compiler.ouput.flush().unwrap();
 }
